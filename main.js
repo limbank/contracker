@@ -7,6 +7,8 @@ const Lumberjack = require('./scripts/main/lumberjack.js');
 const settingsProcessor = require('./scripts/main/settingsProcessor.js');
 const windowManager = require('./scripts/main/windowManager.js');
 
+const { name } = require('./package.json');
+
 let mainWindow, newWin;
 let sp, rp, wm, fp, ie, hp;
 let processorsReady = false;
@@ -14,7 +16,7 @@ let processorsReady = false;
 let gotTheLock;
 let wmReady = false;
 
-const homeDir = path.join(os.homedir(), '.ocdtorture');
+const homeDir = path.join(os.homedir(), '.' + name);
 
 const jack = new Lumberjack();
 

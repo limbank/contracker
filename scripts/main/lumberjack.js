@@ -3,9 +3,11 @@ const util = require('util');
 const os = require('os');
 const path = require('path');
 
+const { name } = require('../../package.json');
+
 class Lumberjack {
     constructor(args) {
-        this.home = path.join(os.homedir(), '.ocdtorture');
+        this.home = path.join(os.homedir(), '.' + name);
         this.file = path.join(this.home, 'log.txt');
         this.logFile;
 

@@ -1,15 +1,27 @@
 {
-    "name": "svelte-app",
-    "version": "1.0.0",
-    "private": true,
+    "name": "contracker",
+    "version": "0.0.1",
+    "description": " Custom TF2 contracts plugin for OBS.",
+    "author": "starbrat",
     "main": "main.js",
+    "homepage": "https://limbank.github.io/contracker/",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/limbank/contracker"
+    },
     "scripts": {
         "build:svelte": "rollup -c",
         "dev:svelte": "rollup -c -w",
         "start:svelte": "sirv public --no-clear",
         "dev:electron": "electron .",
         "dev": "concurrently \"npm run dev:electron\" \"npm run dev:svelte\"",
-        "start": "concurrently \"npm run dev:electron\" \"npm run start:svelte\""
+        "start": "concurrently \"npm run dev:electron\" \"npm run start:svelte\"",
+        "postinstall": "patch-package",
+        "build:electron": "npx electron-builder build --win portable"
+    },
+    "build": {
+        "appId": "starbrat.contracker"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^17.0.0",
