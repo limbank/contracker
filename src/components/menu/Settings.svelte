@@ -1,7 +1,7 @@
 <script>
 	const { ipcRenderer } = require('electron');
 
-	export let settings = { zoom: 0.3 };
+	export let settings = {};
 
 	let timeout;
 
@@ -24,63 +24,32 @@
 
     	//settings = { zoom: 0.3 };
 
-    	settings.zoom = 0.3;
-    	settings.overwrite = false;
-    	settings.theme = false;
+    	settings.logfile = false;
     	settings.tooltips = false;
-    	settings.transparency = false;
-    	settings.autosave = false;
-    	settings.savedir = false;
 
     	resetConfirmed = false;
     	resetText = "Reset";
     }
 
-    ipcRenderer.on('getDirectory', (event, arg) => {
-    	settings.savedir = arg;
+    ipcRenderer.on('getFile', (event, arg) => {
+    	settings.logfile = arg;
 	});
 </script>
 
 <div class="setting">
 	<div class="setting-inner">
 		<div class="setting-title">
-			Zoom amount
+			Log file
 		</div>
 		<div class="setting-control">
-			<span class="setting-control-info">{settings.zoom}</span>
-		</div>
-		<div class="setting-control-large">
-			<input type="range" bind:value={settings.zoom} step="0.1" max="1" min="0.1">
-		</div>
-	</div>
-</div>
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
-			Allow overwrite
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.overwrite}>
-				<span class="slider"></span>
-			</label>
+			<input class="input" type="text" bind:value={settings.logfile}>
+			<button class="button" on:click={() => ipcRenderer.send('select:getFile')}>
+				{settings.logfile ? "Change" : "Browse"}
+			</button>
 		</div>
 	</div>
 	<div class="setting-description">
-		Allow selecting a new image while another image is loaded.
-	</div>
-</div>
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
-			Legacy theme
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.theme}>
-				<span class="slider"></span>
-			</label>
-		</div>
+		Select the console log file to read
 	</div>
 </div>
 <div class="setting">
@@ -99,51 +68,6 @@
 <div class="setting">
 	<div class="setting-inner">
 		<div class="setting-title">
-			Ignore transparency
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.transparency}>
-				<span class="slider"></span>
-			</label>
-		</div>
-	</div>
-	<div class="setting-description">
-		Make the image ignore background transparency and stay opaque.
-	</div>
-</div>
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
-			Auto-save screenshots
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.autosave}>
-				<span class="slider"></span>
-			</label>
-		</div>
-	</div>
-</div>
-<div class="setting" class:disabled={!settings.autosave}>
-	<div class="setting-inner">
-		<div class="setting-title">
-			Auto-save directory
-		</div>
-		<div class="setting-control">
-			<input type="hidden" bind:value={settings.savedir}>
-			<button class="button" on:click={() => ipcRenderer.send('select:saveDirectory')}>
-				{settings.savedir ? "Change" : "Browse"}
-			</button>
-		</div>
-	</div>
-	<div class="setting-description">
-		Choose the directory where to save screenshots
-	</div>
-</div>
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
 			Reset settings
 		</div>
 		<div class="setting-control">
@@ -154,37 +78,6 @@
 		Reset the settings back to their defaults
 	</div>
 </div>
-
-<!--
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
-			Legacy file select
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.select}>
-				<span class="slider"></span>
-			</label>
-		</div>
-	</div>
-	<div class="setting-description">
-		Enable a separate button for clicking to select a file
-	</div>
-</div>
-<div class="setting">
-	<div class="setting-inner">
-		<div class="setting-title">
-			Developer mode
-		</div>
-		<div class="setting-control">
-			<label class="switch">
-				<input type="checkbox" bind:checked={settings.devmode}>
-				<span class="slider"></span>
-			</label>
-		</div>
-	</div>
-</div>-->
 
 <style lang="scss">
 	.setting {
@@ -259,10 +152,32 @@
 	    color: #B7B9BC;
 	    font-size: 12px;
 	    font-weight: 600;
+	    margin-left: 5px;
 
 	    &:hover {
   			background-color: #FAA916;
   			color: #171719;
+	    }
+	}
+
+	.input {
+		min-height: 25px;
+		border-radius: 3px;
+		background-color: #2F2E33;
+		border: 1px solid #2F2E33;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 10px;
+	    color: #B7B9BC;
+	    font-size: 12px;
+	    font-weight: 600;
+	    box-sizing: border-box;
+
+	    &:active,
+	    &:focus {
+	    	outline: none;
+	    	border-color: #FAA916;
 	    }
 	}
 

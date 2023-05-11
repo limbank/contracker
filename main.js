@@ -106,3 +106,23 @@ ipcMain.on('action', (event, arg) => {
 ipcMain.on('loading', (event, arg) => {
     event.sender.send('loading', arg);
 });
+
+ipcMain.on('select:getFile', (event, arg) => {
+    let senderID = event.sender.id;
+    let activeWindow = wm.getWindowByID(senderID);
+    
+    if (!activeWindow) return;
+    dialog.showOpenDialog(activeWindow, {
+        title: "Select file",
+        properties: ['openFile']
+    }).then(result => {
+        if (!result.cancelled && result.filePaths.length > 0) {
+            let files = result.filePaths;
+
+            event.sender.send('getFile', files[0]);
+            event.sender.send('action', "Selected a file");
+        }
+    }).catch(err => {
+        jack.log("Error selecting file: ", err);
+    });
+});
