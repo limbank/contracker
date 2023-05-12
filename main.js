@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const Lumberjack = require('./scripts/main/lumberjack.js');
 const settingsProcessor = require('./scripts/main/settingsProcessor.js');
 const windowManager = require('./scripts/main/windowManager.js');
+const contractProcessor = require('./scripts/main/contractProcessor.js');
 
 const { name } = require('./package.json');
 
@@ -29,6 +30,13 @@ sp = new settingsProcessor({
             sp: sp,
             ready: () => {
                 wmReady = true;
+
+                cp = new contractProcessor({
+                    home: homeDir,
+                    ready: () => {
+                        //contract processor ready
+                    }
+                });
             }
         });
     }
@@ -54,6 +62,12 @@ app.on("window-all-closed", function () {
 
 app.on("activate", function () {
     if (wm.windows.length <= 0) createWhenReady();
+});
+
+ipcMain.on("contracts:get", function (event, arg) {
+    cp.readDirectory((data) => {
+        event.sender.send('contracts', data);
+    });
 });
 
 ipcMain.on('settings:write', (event, arg) => {

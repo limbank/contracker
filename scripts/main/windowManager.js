@@ -42,6 +42,7 @@ class windowManager {
 
         w.webContents.on('did-finish-load', () => {
             w.webContents.send('settings', this.sp.settings);
+            w.show();
         });
     }
     getWindowByID(id) {

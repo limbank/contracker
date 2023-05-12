@@ -34,7 +34,6 @@
 	<Titlebar
 		{version}
 		tips={settings.tooltips}
-		on:settingsOpen={e => { settingsOpen = e.detail; }}
 	/>
 	
 	
