@@ -23,13 +23,13 @@
 <div class="about-text">
 	<ul class="about-list">
 		<li class="about-list-icon">
-			<a href="https://trello.com/b/NlCLf8lW/refviewer"><i class="fab fa-trello"></i></a>
+			<a href="https://trello.com/b/PMc3yKZx/contracker"><i class="fab fa-trello"></i></a>
 		</li>
 		<li class="about-list-icon">
-			<a href="https://github.com/atomic-addison/refviewer"><i class="fab fa-github-square"></i></a>
+			<a href="https://github.com/limbank/contracker"><i class="fab fa-github-square"></i></a>
 		</li>
 		<li class="about-list-icon">
-			<a href="https://source.dog"><i class="fas fa-home"></i></a>
+			<a href="http://limbank.org"><i class="fas fa-home"></i></a>
 		</li>
 	</ul>
 </div>
