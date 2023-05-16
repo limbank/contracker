@@ -7,11 +7,12 @@ const Lumberjack = require('./scripts/main/lumberjack.js');
 const settingsProcessor = require('./scripts/main/settingsProcessor.js');
 const windowManager = require('./scripts/main/windowManager.js');
 const contractProcessor = require('./scripts/main/contractProcessor.js');
+const fileWatcher = require('./scripts/main/fileWatcher.js');
 
 const { name } = require('./package.json');
 
 let mainWindow, newWin;
-let sp, rp, wm, fp, ie, hp;
+let sp, rp, wm, fp, ie, hp, cp, fw;
 let processorsReady = false;
 
 let gotTheLock;
@@ -38,6 +39,10 @@ sp = new settingsProcessor({
                     }
                 });
             }
+        });
+
+        fw = new fileWatcher({
+            sp: sp
         });
     }
 });
