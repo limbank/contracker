@@ -16,10 +16,13 @@ class fileWatcher {
         jack.log("Setting up event...");
         this.sp.on("write", (data)=> {
             jack.log("Settings updated!!!!");
+
             this.setupTail(data);
         });
     }
     removeTail() {
+        if (!this.tail) return;
+        
         try {
             this.tail.unwatch();
             this.tail.removeAllListeners(["line", "error"])
@@ -30,6 +33,7 @@ class fileWatcher {
         }
     }
     setupTail(newData) {
+        if (!newData.logfile) return;
         let f = path.resolve(newData.logfile);
 
         if (this.logfile == f) return jack.log("Already watching this file...");

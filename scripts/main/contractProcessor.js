@@ -21,6 +21,8 @@ class contractProcessor {
             this.files = files.filter(file => path.extname(file) === '.json');
             this.processed = [];
 
+            if (files.length < 1) return;
+
             this.getFiles(this.files, () => {
                 if (callback && typeof callback == "function") callback(this.processed);
             });
